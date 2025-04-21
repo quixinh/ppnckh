@@ -49,7 +49,9 @@ def scale_data(X, scaler_type='standard'):
 
 # Hàm áp dụng SMOTE
 def apply_smote(X, y, random_state=42):
-    smote = SMOTE(random_state=random_state)
+    sampling_strategy = {label: 2000 for label, count in y.value_counts().items() if count < 2000}
+
+    smote = SMOTE(sampling_strategy=sampling_strategy, random_state=random_state)
     X_balanced, y_balanced = smote.fit_resample(X, y)
     return X_balanced, y_balanced
 
@@ -68,10 +70,10 @@ def plot_heatmap(X, y, title="Correlation Heatmap"):
     Input: X, y
     """
     data = X.copy()
-    data['target'] = y
+    data['Attack_type'] = y
     corr_matrix = data.corr()
     
-    plt.figure(figsize=(8, 6))
+    plt.figure(figsize=(20, 25))
     sns.heatmap(corr_matrix, annot=True, cmap='coolwarm', vmin=-1, vmax=1)
     plt.title(title)
     plt.show()
