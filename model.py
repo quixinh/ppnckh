@@ -1,15 +1,19 @@
 import xgboost as xgb
 from sklearn import svm
 from sklearn.svm import LinearSVC
+from sklearn.svm import SVC
 from sklearn.ensemble import RandomForestClassifier
 
-def SVM(X,y, C=1.0, kernel='linear', degree=3, gamma='scale', coef0=0.0):
-
-    model = svm.SVC(C=C, kernel=kernel, class_weight='balanced', random_state=42, degree=degree, gamma=gamma, coef0=coef0)
-    model.fit(X, y)
+def SVM(X_train, y_train, C=1.0, kernel='rbf', gamma='scale'):
+    if kernel == 'linear':
+        model = SVC(C=C, kernel='linear', class_weight='balanced', random_state=42)
+    elif kernel == 'rbf':
+        model = SVC(C=C, kernel='rbf', gamma=gamma, class_weight='balanced', random_state=42)
+    
+    model.fit(X_train, y_train)
     return model
-def SVC(X_train, y_train):
-    svm = LinearSVC(class_weight='balanced', random_state=42, max_iter=1000)
+def LinearSVC(X_train, y_train):
+    svm = LinearSVC(class_weight='balanced', random_state=42, max_iter=10000)
 
     # Huấn luyện mô hình
     model = svm.fit(X_train, y_train)
@@ -27,6 +31,5 @@ def random_forest(X_train, y_train):
 
     return model
 def predict(model, X_test):
-
     predictions = model.predict(X_test)
     return predictions
