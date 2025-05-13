@@ -85,18 +85,18 @@ class MLP(nn.Module):
 def model_mlp(X_train, y_train, input_size, hidden_size1, hidden_size2, output_size, epochs=100):
     # 1. Chọn thiết bị (GPU nếu có)
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-    print(f'🖥️ Đang huấn luyện trên: {device}')
+    print(f'Đang huấn luyện trên: {device}')
 
     # 2. Chuyển dữ liệu sang Tensor và thiết bị
-    X_train_tensor = torch.tensor(X_train, dtype=torch.float32).to(device)
-    y_train_tensor = torch.tensor(y_train, dtype=torch.long).to(device)
+    X_train_tensor = torch.tensor(X_train.astype(np.float32).values, dtype=torch.float32).to(device)
+    y_train_tensor = torch.tensor(y_train.values, dtype=torch.long).to(device)
 
     # 3. Khởi tạo mô hình và chuyển sang thiết bị
     model = MLP(input_size, hidden_size1, hidden_size2, output_size).to(device)
 
     # 4. Định nghĩa loss và optimizer
     criterion = nn.CrossEntropyLoss()
-    optimizer = optim.Adam(model.parameters(), lr=0.001)
+    optimizer = optim.Adam(model.parameters(), lr=0.0001)
 
     # 5. Huấn luyện mô hình
     for epoch in range(epochs):
@@ -111,3 +111,11 @@ def model_mlp(X_train, y_train, input_size, hidden_size1, hidden_size2, output_s
             print(f'Epoch [{epoch+1}/{epochs}], Loss: {loss.item():.4f}')
 
     return model
+def predict_mlp(model, X):
+    model.eval()  # Đặt mô hình sang chế độ đánh giá
+    with torch.no_grad():
+        device = next(model.parameters()).device  # Lấy thiết bị hiện tại của model
+        X_tensor = torch.tensor(X.astype(np.float32).values, dtype=torch.float32).to(device)
+        outputs = model(X_tensor)
+        _, predicted = torch.max(outputs, 1)  # Lấy chỉ số lớp có xác suất cao nhất
+    return predicted.cpu().numpy()

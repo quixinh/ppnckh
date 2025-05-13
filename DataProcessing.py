@@ -126,6 +126,60 @@ def shap_ex(X_train, y_train, X_test):
 
     # Vẽ biểu đồ SHAP
     shap.summary_plot(shap_values, X_test)
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+from sklearn.decomposition import PCA
+from sklearn.preprocessing import StandardScaler
+
+def pca_analysis(df, n_components=2, plot=True):
+    """
+    Thực hiện PCA trên dataframe đầu vào.
+    
+    Tham số:
+    - df: DataFrame chứa dữ liệu số
+    - n_components: Số thành phần chính mong muốn (mặc định = 2)
+    - plot: Nếu True, vẽ biểu đồ phương sai và scatter plot
+
+    Trả về:
+    - pca_df: DataFrame chứa các thành phần chính
+    - explained_variance: Tỷ lệ phương sai của các thành phần chính
+    """
+    # Chỉ lấy các cột số
+    features = df.select_dtypes(include=['float64', 'int64']).columns
+    x = df[features].dropna().values  # loại bỏ NaN nếu có
+    x_scaled = StandardScaler().fit_transform(x)
+    
+    # PCA
+    pca = PCA(n_components=n_components)
+    principal_components = pca.fit_transform(x_scaled)
+    
+    # Tạo DataFrame kết quả
+    pc_columns = [f'PC{i+1}' for i in range(n_components)]
+    pca_df = pd.DataFrame(data=principal_components, columns=pc_columns)
+
+    # Hiển thị biểu đồ
+    if plot:
+        # Biểu đồ phương sai tích lũy
+        pca_all = PCA().fit(x_scaled)
+        plt.figure(figsize=(8, 4))
+        plt.plot(range(1, len(pca_all.explained_variance_ratio_)+1),
+                 pca_all.explained_variance_ratio_.cumsum(), marker='o')
+        plt.xlabel('Số thành phần chính')
+        plt.ylabel('Tổng % phương sai')
+        plt.title('Biểu đồ tích lũy phương sai PCA')
+        plt.grid(True)
+        plt.show()
+
+        # Biểu đồ scatter plot nếu n_components >= 2
+        if n_components >= 2:
+            sns.scatterplot(data=pca_df, x='PC1', y='PC2')
+            plt.title("Biểu đồ PCA (2 thành phần chính)")
+            plt.xlabel('PC1')
+            plt.ylabel('PC2')
+            plt.show()
+
+    return pca_df, pca.explained_variance_ratio_
 
 #cachs kahc khac de ve shap
 # from lime import lime_tabular
