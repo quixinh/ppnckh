@@ -76,8 +76,6 @@ Việc áp dụng các phương pháp lựa chọn đặc trưng (Feature Import
 1. S. Bhunia and R. Nagapadma. RT-IoT2022. UCI Machine Learning Repository, 2023. https://doi.org/10.24432/C5P338.
 2. [Chưa xác định: Các tài liệu tham khảo bổ sung từ IEEE Xplore, SpringerLink hoặc các nguồn khác.]
 
-## Giấy Phép
-[Chưa xác định: Xác định giấy phép cho dự án, ví dụ: MIT, Apache hoặc không có.]
 
 ## Liên Hệ
 - **Sinh Viên**: Tạ Hồng Quí
