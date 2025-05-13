@@ -4,9 +4,9 @@ import seaborn as sns
 import numpy as np
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.datasets import load_iris
+import model
 
-
-def select_feature(X,y,top_n=20):
+def select_feature(X,y,top_n=40):
     # Train mô hình
     model = RandomForestClassifier()
     model.fit(X, y)
@@ -104,3 +104,56 @@ def remove_highly_correlated_columns(df, threshold=0.8, target_column=None):
 # print(df_reduced)
 # print("\nDanh sách các cột bị loại bỏ:")
 # print(dropped_columns)
+import shap
+import matplotlib.pyplot as plt  # Đảm bảo có thư viện vẽ
+
+def shap_ex(X_train, y_train, X_test):
+    # Giả sử bạn đã định nghĩa hàm random_forest trong model.py
+    modelr = model.model_random_forest(X_train, y_train)
+    
+    # Train model
+    modelr.fit(X_train, y_train)
+
+    # Đảm bảo dữ liệu đầu vào là float
+    X_train = X_train.astype(float)
+    X_test = X_test.astype(float)
+
+    # Khởi tạo SHAP explainer
+    explainer = shap.Explainer(modelr, X_train)
+
+    # Tính SHAP values và tắt kiểm tra additivity để tránh lỗi
+    shap_values = explainer(X_test, check_additivity=False)
+
+    # Vẽ biểu đồ SHAP
+    shap.summary_plot(shap_values, X_test)
+
+#cachs kahc khac de ve shap
+# from lime import lime_tabular
+
+# explainer = lime_tabular.LimeTabularExplainer(X_train.values, feature_names=X_train.columns, class_names=['Normal', 'Attack'], mode='classification')
+# exp = explainer.explain_instance(X_test.iloc[0].values, model.predict_proba)
+# exp.show_in_notebook()
+#pp khch nhau
+# target = 'payload_bytes_per_second'  # hoặc 'flow_duration'
+# X = df.drop(columns=[target, 'Attack_type'])
+# y = df[target]
+
+# from sklearn.ensemble import RandomForestRegressor
+# from sklearn.metrics import mean_squared_error, r2_score
+# from sklearn.model_selection import train_test_split
+
+# X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
+# reg = RandomForestRegressor()
+# reg.fit(X_train, y_train)
+
+# y_pred = reg.predict(X_test)
+# print("RMSE:", mean_squared_error(y_test, y_pred, squared=False))
+# print("R² Score:", r2_score(y_test, y_pred))
+
+# import matplotlib.pyplot as plt
+
+# plt.scatter(y_test, y_pred, alpha=0.3)
+# plt.xlabel("True Values")
+# plt.ylabel("Predicted Values")
+# plt.title("Regression Results")
+# plt.show()
