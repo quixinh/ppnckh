@@ -31,7 +31,7 @@ def select_feature(X,y,top_n=40):
     plt.xlabel('Importance')
     plt.ylabel('Feature')
     plt.tight_layout()
-    plt.show()
+    # plt.show()
     return top_features # return ve cai list co chua cac feature quan trong nhat
 def remove_highly_correlated_columns(df, threshold=0.8, target_column=None):
     # Tính ma trận tương quan
