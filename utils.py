@@ -19,3 +19,40 @@ def confusion_matric(y_test, y_pred):
     plt.tight_layout()
     plt.savefig('confusion_matrix.png', dpi=300)  # Lưu hình cho báo cáo
     plt.show()
+import pandas as pd
+import matplotlib.pyplot as plt
+
+def label_stats_plot(df, target_col):
+    """
+    Thống kê số lượng và tỷ lệ nhãn trong target + vẽ biểu đồ.
+
+    Args:
+        df (pd.DataFrame): DataFrame chứa dữ liệu
+        target_col (str): Tên cột target
+
+    Returns:
+        pd.DataFrame: Bảng thống kê nhãn
+    """
+    value_counts = df[target_col].value_counts()
+    percentages = df[target_col].value_counts(normalize=True) * 100
+
+    stats_df = pd.DataFrame({
+        'Count': value_counts,
+        'Percentage (%)': percentages.round(2)
+    })
+
+    print(f"Tổng số mẫu: {len(df)}")
+    print(stats_df)
+
+    # Vẽ biểu đồ thanh
+    plt.figure(figsize=(6, 4))
+    value_counts.plot(kind='bar', color='skyblue', edgecolor='black')
+    plt.title(f'Phân phối nhãn trong "{target_col}"')
+    plt.xlabel('Label')
+    plt.ylabel('Số lượng')
+    plt.xticks(rotation=0)
+    plt.grid(axis='y', linestyle='--', alpha=0.7)
+    plt.tight_layout()
+    plt.show()
+
+    return stats_df
