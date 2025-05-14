@@ -64,41 +64,54 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 
-# Kiến trúc MLP
 class MLP(nn.Module):
-    def __init__(self, input_size, hidden_size1, hidden_size2, output_size):
+    def __init__(self, input_size, hidden_size1, hidden_size2, hidden_size3, output_size, dropout_rate=0.3):
         super(MLP, self).__init__()
         self.layer1 = nn.Linear(input_size, hidden_size1)
         self.relu1 = nn.ReLU()
+        self.dropout1 = nn.Dropout(dropout_rate)  # Thêm Dropout
         self.layer2 = nn.Linear(hidden_size1, hidden_size2)
         self.relu2 = nn.ReLU()
-        self.output = nn.Linear(hidden_size2, output_size)
-        # CrossEntropyLoss đã bao gồm Softmax
+        self.dropout2 = nn.Dropout(dropout_rate)  # Thêm Dropout
+        self.layer3 = nn.Linear(hidden_size2, hidden_size3)  # Thêm tầng ẩn thứ 3
+        self.relu3 = nn.ReLU()
+        self.dropout3 = nn.Dropout(dropout_rate)  # Thêm Dropout
+        self.output = nn.Linear(hidden_size3, output_size)
 
     def forward(self, x):
         x = self.relu1(self.layer1(x))
+        x = self.dropout1(x)
         x = self.relu2(self.layer2(x))
+        x = self.dropout2(x)
+        x = self.relu3(self.layer3(x))
+        x = self.dropout3(x)
         x = self.output(x)
         return x
 
-# Hàm huấn luyện MLP trên GPU nếu có
-def model_mlp(X_train, y_train, input_size, hidden_size1, hidden_size2, output_size, epochs=100):
-    # 1. Chọn thiết bị (GPU nếu có)
+def model_mlp(X_train, y_train, input_size, hidden_size1, hidden_size2, hidden_size3, output_size, epochs=100):
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     print(f'Đang huấn luyện trên: {device}')
 
-    # 2. Chuyển dữ liệu sang Tensor và thiết bị
+    # Chuyển dữ liệu sang Tensor
     X_train_tensor = torch.tensor(X_train.astype(np.float32).values, dtype=torch.float32).to(device)
     y_train_tensor = torch.tensor(y_train.values, dtype=torch.long).to(device)
 
-    # 3. Khởi tạo mô hình và chuyển sang thiết bị
-    model = MLP(input_size, hidden_size1, hidden_size2, output_size).to(device)
+    # Tính trọng số cho CrossEntropyLoss
+    class_counts = np.bincount(y_train)
+    num_classes = len(class_counts)
+    weights = 1.0 / class_counts
+    weights = weights / weights.sum() * num_classes
+    class_weights = torch.tensor(weights, dtype=torch.float32).to(device)
 
-    # 4. Định nghĩa loss và optimizer
-    criterion = nn.CrossEntropyLoss()
-    optimizer = optim.Adam(model.parameters(), lr=0.00001)
+    # Khởi tạo mô hình
+    model = MLP(input_size, hidden_size1, hidden_size2, hidden_size3, output_size).to(device)
 
-    # 5. Huấn luyện mô hình
+    # Loss và optimizer
+    criterion = nn.CrossEntropyLoss(weight=class_weights)
+    optimizer = optim.Adam(model.parameters(), lr=0.001)  # Tăng lr
+    scheduler = optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode='min', factor=0.1, patience=10)
+
+    # Huấn luyện
     for epoch in range(epochs):
         model.train()
         optimizer.zero_grad()
@@ -106,6 +119,9 @@ def model_mlp(X_train, y_train, input_size, hidden_size1, hidden_size2, output_s
         loss = criterion(outputs, y_train_tensor)
         loss.backward()
         optimizer.step()
+
+        # Điều chỉnh lr
+        scheduler.step(loss)
 
         if (epoch+1) % 10 == 0 or epoch == 0:
             print(f'Epoch [{epoch+1}/{epochs}], Loss: {loss.item():.4f}')
