@@ -170,27 +170,29 @@ def pca_analysis(df, n_components=2, plot=True):
         plt.title('Biểu đồ tích lũy phương sai PCA')
         plt.grid(True)
         plt.show()
-
-        # Biểu đồ scatter plot nếu n_components >= 2
-        if n_components >= 2:
-            sns.scatterplot(data=pca_df, x='PC1', y='PC2')
-            plt.title("Biểu đồ PCA (2 thành phần chính)")
-            plt.xlabel('PC1')
-            plt.ylabel('PC2')
-            plt.show()
-
     return pca_df, pca.explained_variance_ratio_
-import matplotlib.pyplot as plt
+
 from mpl_toolkits.mplot3d import Axes3D
+def plot_pca_2d(X_pca, y=None, title="Biểu đồ PCA 2D"):
+    """
+    Vẽ biểu đồ 2D PCA (PC1 vs PC2)
+    """
+    plt.figure(figsize=(8, 6))
+    if y is not None:
+        sc = plt.scatter(X_pca[:, 0], X_pca[:, 1], c=y, cmap='viridis', edgecolor='k')
+        plt.colorbar(sc)
+    else:
+        plt.scatter(X_pca[:, 0], X_pca[:, 1], edgecolor='k')
+
+    plt.title(title)
+    plt.xlabel("PC1")
+    plt.ylabel("PC2")
+    plt.tight_layout()
+    plt.show()
 
 def plot_pca_3d(X_pca, y=None, title="Biểu đồ PCA 3D"):
     """
-    Vẽ biểu đồ PCA 3 thành phần chính trong không gian 3D.
-    
-    Parameters:
-        X_pca: ndarray đã được PCA với n_components >= 3
-        y: Nhãn (tùy chọn) để tô màu
-        title: Tiêu đề biểu đồ
+    Vẽ biểu đồ PCA với 3 thành phần chính trong không gian 3D
     """
     fig = plt.figure(figsize=(10, 7))
     ax = fig.add_subplot(111, projection='3d')
@@ -208,13 +210,9 @@ def plot_pca_3d(X_pca, y=None, title="Biểu đồ PCA 3D"):
     plt.tight_layout()
     plt.show()
 
-def plot_pca_4d(X_pca, y=None, title="Biểu đồ PCA 4D (3D + màu)"):
+def plot_pca_4d(X_pca, y=None, title="Biểu đồ PCA 4D (3D + màu theo PC4 hoặc nhãn)"):
     """
-    Vẽ PCA 4D: dùng PC1, PC2, PC3 cho không gian và PC4 cho màu sắc.
-
-    Parameters:
-        X_pca: ndarray đã được PCA với n_components >= 4
-        y: Nhãn (tuỳ chọn), dùng nếu muốn tô màu theo lớp
+    Vẽ PCA 4D: dùng PC1, PC2, PC3 cho không gian và PC4 hoặc y cho màu sắc
     """
     fig = plt.figure(figsize=(10, 7))
     ax = fig.add_subplot(111, projection='3d')
@@ -230,6 +228,7 @@ def plot_pca_4d(X_pca, y=None, title="Biểu đồ PCA 4D (3D + màu)"):
     ax.set_zlabel("PC3")
     plt.tight_layout()
     plt.show()
+
 
 #cachs kahc khac de ve shap
 # from lime import lime_tabular
