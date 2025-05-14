@@ -96,7 +96,7 @@ def model_mlp(X_train, y_train, input_size, hidden_size1, hidden_size2, output_s
 
     # 4. Định nghĩa loss và optimizer
     criterion = nn.CrossEntropyLoss()
-    optimizer = optim.Adam(model.parameters(), lr=0.0001)
+    optimizer = optim.Adam(model.parameters(), lr=0.00001)
 
     # 5. Huấn luyện mô hình
     for epoch in range(epochs):

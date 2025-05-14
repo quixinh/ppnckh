@@ -148,7 +148,7 @@ def pca_analysis(df, n_components=2, plot=True):
     # Chỉ lấy các cột số
     features = df.select_dtypes(include=['float64', 'int64']).columns
     x = df[features].dropna().values  # loại bỏ NaN nếu có
-    x_scaled = StandardScaler().fit_transform(x)
+    x_scaled = x
     
     # PCA
     pca = PCA(n_components=n_components)
@@ -180,6 +180,56 @@ def pca_analysis(df, n_components=2, plot=True):
             plt.show()
 
     return pca_df, pca.explained_variance_ratio_
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+
+def plot_pca_3d(X_pca, y=None, title="Biểu đồ PCA 3D"):
+    """
+    Vẽ biểu đồ PCA 3 thành phần chính trong không gian 3D.
+    
+    Parameters:
+        X_pca: ndarray đã được PCA với n_components >= 3
+        y: Nhãn (tùy chọn) để tô màu
+        title: Tiêu đề biểu đồ
+    """
+    fig = plt.figure(figsize=(10, 7))
+    ax = fig.add_subplot(111, projection='3d')
+
+    if y is not None:
+        sc = ax.scatter(X_pca[:, 0], X_pca[:, 1], X_pca[:, 2], c=y, cmap='viridis', edgecolor='k')
+        plt.colorbar(sc)
+    else:
+        ax.scatter(X_pca[:, 0], X_pca[:, 1], X_pca[:, 2], edgecolor='k')
+
+    ax.set_title(title)
+    ax.set_xlabel("PC1")
+    ax.set_ylabel("PC2")
+    ax.set_zlabel("PC3")
+    plt.tight_layout()
+    plt.show()
+
+def plot_pca_4d(X_pca, y=None, title="Biểu đồ PCA 4D (3D + màu)"):
+    """
+    Vẽ PCA 4D: dùng PC1, PC2, PC3 cho không gian và PC4 cho màu sắc.
+
+    Parameters:
+        X_pca: ndarray đã được PCA với n_components >= 4
+        y: Nhãn (tuỳ chọn), dùng nếu muốn tô màu theo lớp
+    """
+    fig = plt.figure(figsize=(10, 7))
+    ax = fig.add_subplot(111, projection='3d')
+
+    color = X_pca[:, 3] if y is None else y
+    sc = ax.scatter(X_pca[:, 0], X_pca[:, 1], X_pca[:, 2],
+                    c=color, cmap='plasma', edgecolor='k')
+    plt.colorbar(sc)
+    
+    ax.set_title(title)
+    ax.set_xlabel("PC1")
+    ax.set_ylabel("PC2")
+    ax.set_zlabel("PC3")
+    plt.tight_layout()
+    plt.show()
 
 #cachs kahc khac de ve shap
 # from lime import lime_tabular
