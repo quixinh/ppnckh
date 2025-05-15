@@ -49,7 +49,7 @@ def scale_data(X, scaler_type='standard'):
 
 # Hàm áp dụng SMOTE
 def apply_smote(X, y, random_state=42):
-    sampling_strategy = {label: 2000 for label, count in y.value_counts().items() if count < 2000}
+    sampling_strategy = {label: 500 for label, count in y.value_counts().items() if count < 500}
 
     smote = SMOTE(sampling_strategy=sampling_strategy, random_state=random_state)
     X_balanced, y_balanced = smote.fit_resample(X, y)

@@ -45,12 +45,12 @@ def label_stats_plot(df, target_col):
     print(stats_df)
 
     # Vẽ biểu đồ thanh
-    plt.figure(figsize=(6, 4))
+    plt.figure(figsize=(10, 4))
     value_counts.plot(kind='bar', color='skyblue', edgecolor='black')
     plt.title(f'Phân phối nhãn trong "{target_col}"')
     plt.xlabel('Label')
     plt.ylabel('Số lượng')
-    plt.xticks(rotation=0)
+    plt.xticks(rotation=45)
     plt.grid(axis='y', linestyle='--', alpha=0.7)
     plt.tight_layout()
     plt.show()
