@@ -10,6 +10,8 @@ import torch.nn as nn
 import torch.optim as optim
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
+from xgboost import XGBClassifier
+from sklearn.utils.class_weight import compute_class_weight
 import numpy as np
 
 def model_SVM(X_train, y_train, C=1.0, kernel='rbf', gamma='scale'):
@@ -33,9 +35,22 @@ def model_LinearSVC(X_train, y_train):
 #     model.fit(X_train, y_train)
 #     return model
 def model_xgboost(X_train, y_train, NUM_CLASSES):
+    # Tính trọng số lớp
+    classes = np.unique(y_train)
+    class_weights = compute_class_weight(class_weight='balanced', classes=classes, y=y_train)
+    
+    # Tạo dictionary ánh xạ class -> weight
+    weight_dict = {i: w for i, w in zip(classes, class_weights)}
+    
+    # Tạo trọng số cho từng mẫu
+    sample_weights = np.array([weight_dict[label] for label in y_train])
 
-    model = XGBClassifier(objective='multi:softmax', num_class=NUM_CLASSES)
-    model.fit(X_train, y_train)
+    # Khởi tạo mô hình với cấu hình nhiều lớp
+    model = XGBClassifier(objective='multi:softmax', num_class=NUM_CLASSES, eval_metric='mlogloss', use_label_encoder=False)
+    
+    # Huấn luyện mô hình với trọng số mẫu
+    model.fit(X_train, y_train, sample_weight=sample_weights)
+    
     return model
 
 def model_logistic_regression(X_train, y_train):
