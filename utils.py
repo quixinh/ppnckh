@@ -56,3 +56,13 @@ def label_stats_plot(df, target_col):
     plt.show()
 
     return stats_df
+import time
+
+def measure_time(func, *args, **kwargs):
+    """Đo thời gian thực thi của một hàm."""
+    start_time = time.time()
+    result = func(*args, **kwargs)
+    end_time = time.time()
+
+    print(f"Thời gian chạy: {end_time - start_time:.4f} giây")
+    return result
