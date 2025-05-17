@@ -13,7 +13,6 @@ from sklearn.preprocessing import StandardScaler
 from xgboost import XGBClassifier
 from sklearn.utils.class_weight import compute_class_weight
 import numpy as np
-
 def model_SVM(X_train, y_train, C=1.0, kernel='rbf', gamma='scale'):
     if kernel == 'linear':
         model = SVC(C=C, kernel='linear', class_weight='balanced', random_state=42)
@@ -72,12 +71,20 @@ def model_random_forest(X_train, y_train):
     model.fit(X_train, y_train)
 
     return model
-def predict(model, X_test):
-    predictions = model.predict(X_test)
-    return predictions
-import torch
-import torch.nn as nn
-import torch.optim as optim
+#####
+def get_random_forest_model(**kwargs):
+    return RandomForestClassifier(**kwargs)
+
+def get_xgboost_model(**kwargs):
+    return XGBClassifier(**kwargs)
+
+def get_logistic_regression_model(**kwargs):
+    return LogisticRegression(**kwargs)
+
+def get_knn_model(**kwargs):
+    return KNeighborsClassifier(**kwargs)
+
+
 
 class MLP(nn.Module):
     def __init__(self, input_size, hidden_size1, hidden_size2, hidden_size3, output_size, dropout_rate=0.3):
@@ -150,3 +157,6 @@ def predict_mlp(model, X):
         outputs = model(X_tensor)
         _, predicted = torch.max(outputs, 1)  # Lấy chỉ số lớp có xác suất cao nhất
     return predicted.cpu().numpy()
+def predict(model, X_test):
+    predictions = model.predict(X_test)
+    return predictions
