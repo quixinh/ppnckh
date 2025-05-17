@@ -2,7 +2,7 @@ from sklearn.metrics import classification_report, confusion_matrix
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
-from sklearn.metrics import confusion_matrix, classification_report
+import numpy as np
 def report(y_test, y_pred):
     print("Classification Report:\n", classification_report(y_test, y_pred))
     print("Confusion Matrix:\n", confusion_matrix(y_test, y_pred))
@@ -45,13 +45,23 @@ def label_stats_plot(df, target_col):
     print(stats_df)
 
     # Vẽ biểu đồ thanh
-    plt.figure(figsize=(10, 4))
-    value_counts.plot(kind='bar', color='skyblue', edgecolor='black')
+    plt.figure(figsize=(8, 5))  # Tăng chiều rộng để có không gian
+    ax = value_counts.plot(kind='bar', color='skyblue', edgecolor='black')
     plt.title(f'Phân phối nhãn trong "{target_col}"')
     plt.xlabel('Label')
     plt.ylabel('Số lượng')
-    plt.xticks(rotation=45)
     plt.grid(axis='y', linestyle='--', alpha=0.7)
+    
+    # Căn chỉnh nhãn với cột và lệch sang trái
+    ax.set_xticks(range(len(value_counts)))  # Đặt vị trí tick theo số lượng cột
+    ax.set_xticklabels(value_counts.index, rotation=45, ha='right', rotation_mode='anchor')  # Căn phải và xoay
+    plt.subplots_adjust(bottom=0.2)  # Tăng khoảng cách dưới để tránh chồng lấn
+    
+    # Dịch nhãn sang trái
+    for label in ax.get_xticklabels():
+        x_coord = label.get_position()[0]
+        label.set_x(x_coord - 0.2)  # Dịch sang trái (tăng giá trị âm để lệch nhiều hơn)
+
     plt.tight_layout()
     plt.show()
 
@@ -66,3 +76,31 @@ def measure_time(func, *args, **kwargs):
 
     print(f"Thời gian chạy: {end_time - start_time:.4f} giây")
     return result
+
+
+def plot_confusion_matrix(y_true, y_pred, labels=None, figsize=(10, 8)):
+    """
+    Vẽ ma trận nhầm lẫn giữa nhãn thực tế và nhãn dự đoán.
+
+    Args:
+        y_true (array-like): Nhãn thực tế
+        y_pred (array-like): Nhãn dự đoán
+        labels (list, optional): Danh sách tên nhãn (nếu có)
+        figsize (tuple, optional): Kích thước biểu đồ (mặc định: (10, 8))
+    """
+    # Tính ma trận nhầm lẫn
+    cm = confusion_matrix(y_true, y_pred)
+
+    # Vẽ ma trận nhầm lẫn
+    plt.figure(figsize=figsize)
+    sns.heatmap(cm, annot=True, fmt='d', cmap='Blues', cbar=True, square=True,
+                xticklabels=labels if labels else 'auto',
+                yticklabels=labels if labels else 'auto')
+    
+    plt.title('Ma trận nhầm lẫn')
+    plt.xlabel('Nhãn dự đoán')
+    plt.ylabel('Nhãn thực tế')
+    plt.xticks(rotation=45, ha='right')
+    plt.yticks(rotation=0)
+    plt.tight_layout()
+    plt.show()

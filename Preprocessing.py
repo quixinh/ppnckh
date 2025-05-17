@@ -34,9 +34,14 @@ def one_hot_encode(data, categorical_cols):
 def label_encode(data, categorical_cols):
     from sklearn.preprocessing import LabelEncoder
     le = LabelEncoder()
+    label_mappings = {}
+
     for col in categorical_cols:
         data[col] = le.fit_transform(data[col])
-    return data
+        label_mappings[col] = dict(zip(le.transform(le.classes_), le.classes_))  # mapping số → nhãn gốc
+
+    return data, label_mappings
+
 # Hàm scale dữ liệu
 def scale_data(X, scaler_type='standard'):
     if scaler_type == 'standard':

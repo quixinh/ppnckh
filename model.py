@@ -1,4 +1,6 @@
 import xgboost as xgb
+import utils
+import time
 from sklearn import svm
 from sklearn.svm import LinearSVC
 from sklearn.svm import SVC
@@ -19,14 +21,16 @@ def model_SVM(X_train, y_train, C=1.0, kernel='rbf', gamma='scale'):
     elif kernel == 'rbf':
         model = SVC(C=C, kernel='rbf', gamma=gamma, class_weight='balanced', random_state=42)
     
-    model.fit(X_train, y_train)
+    # model.fit(X_train, y_train)
+    utils.measure_time(model.fit, X_train, y_train)
     return model
 def model_LinearSVC(X_train, y_train):
     svm = LinearSVC(class_weight='balanced', random_state=42, max_iter=10000)
 
     # Huấn luyện mô hình
-    model = svm.fit(X_train, y_train)
-    return model
+    # model = svm.fit(X_train, y_train)
+    utils.measure_time(svm.fit, X_train, y_train)
+    return svm
 # def xgb(X_train, y_train):
 
 #     # Create the model with specified parameters
@@ -48,41 +52,51 @@ def model_xgboost(X_train, y_train, NUM_CLASSES):
     model = XGBClassifier(objective='multi:softmax', num_class=NUM_CLASSES, eval_metric='mlogloss', use_label_encoder=False)
     
     # Huấn luyện mô hình với trọng số mẫu
-    model.fit(X_train, y_train, sample_weight=sample_weights)
-    
+    # model.fit(X_train, y_train, sample_weight=sample_weights)
+    utils.measure_time(model.fit, X_train, y_train,sample_weight=sample_weights)
     return model
 
 def model_logistic_regression(X_train, y_train):
     
     model = LogisticRegression(multi_class='multinomial', solver='lbfgs', class_weight='balanced', random_state=42, max_iter=10000)
-    model.fit(X_train, y_train)
+    # model.fit(X_train, y_train)
+    utils.measure_time(model.fit, X_train, y_train)
     return model
 from sklearn.neighbors import KNeighborsClassifier
 
 def model_knn(X_train, y_train, n_neighbors=5):
 
     model = KNeighborsClassifier(n_neighbors=n_neighbors, weights='distance', algorithm='auto', n_jobs=-1)
-    model.fit(X_train, y_train)
+    # model.fit(X_train, y_train)
+    utils.measure_time(model.fit, X_train, y_train)
     return model
 
 def model_random_forest(X_train, y_train):
 
     model = RandomForestClassifier(n_estimators=100,class_weight='balanced', random_state=42)
-    model.fit(X_train, y_train)
-
+    # model.fit(X_train, y_train)
+    utils.measure_time(model.fit, X_train, y_train)
     return model
 #####
 def get_random_forest_model(**kwargs):
-    return RandomForestClassifier(**kwargs)
+    model = RandomForestClassifier(**kwargs)
+    # utils.measure_time(model.fit, **kwargs)
+    return model
 
 def get_xgboost_model(**kwargs):
-    return XGBClassifier(**kwargs)
+    model = XGBClassifier(**kwargs)
+    # utils.measure_time(model.fit, **kwargs)
+    return model
 
 def get_logistic_regression_model(**kwargs):
-    return LogisticRegression(**kwargs)
+    model = LogisticRegression(**kwargs)
+    # utils.measure_time(model.fit, **kwargs)
+    return model
 
 def get_knn_model(**kwargs):
-    return KNeighborsClassifier(**kwargs)
+    model = KNeighborsClassifier(**kwargs)
+    # utils.measure_time(model.fit, **kwargs)
+    return model
 
 
 
@@ -132,7 +146,7 @@ def model_mlp(X_train, y_train, input_size, hidden_size1, hidden_size2, hidden_s
     criterion = nn.CrossEntropyLoss(weight=class_weights)
     optimizer = optim.Adam(model.parameters(), lr=0.001)  # Tăng lr
     scheduler = optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode='min', factor=0.1, patience=10)
-
+    start_time = time.time()
     # Huấn luyện
     for epoch in range(epochs):
         model.train()
@@ -147,7 +161,8 @@ def model_mlp(X_train, y_train, input_size, hidden_size1, hidden_size2, hidden_s
 
         if (epoch+1) % 10 == 0 or epoch == 0:
             print(f'Epoch [{epoch+1}/{epochs}], Loss: {loss.item():.4f}')
-
+    end_time = time.time()
+    print(f'Thời gian huấn luyện: {end_time - start_time:.2f} giây')
     return model
 def predict_mlp(model, X):
     model.eval()  # Đặt mô hình sang chế độ đánh giá
