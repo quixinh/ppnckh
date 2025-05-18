@@ -78,7 +78,7 @@ def measure_time(func, *args, **kwargs):
     return result
 
 
-def plot_confusion_matrix(y_true, y_pred, labels=None, figsize=(10, 8)):
+def plot_confusion_matrix(y_true, y_pred, labels=None, tex="Ma trận nhầm lẫn sau giảm chiều - Mô hình Random Forest", figsize=(10, 8)):
     """
     Vẽ ma trận nhầm lẫn giữa nhãn thực tế và nhãn dự đoán.
 
@@ -86,21 +86,37 @@ def plot_confusion_matrix(y_true, y_pred, labels=None, figsize=(10, 8)):
         y_true (array-like): Nhãn thực tế
         y_pred (array-like): Nhãn dự đoán
         labels (list, optional): Danh sách tên nhãn (nếu có)
+        tex (str, optional): Tiêu đề biểu đồ và tên file
         figsize (tuple, optional): Kích thước biểu đồ (mặc định: (10, 8))
     """
+    from sklearn.metrics import confusion_matrix
+    import matplotlib.pyplot as plt
+    import seaborn as sns
+    import os
+
     # Tính ma trận nhầm lẫn
     cm = confusion_matrix(y_true, y_pred)
 
     # Vẽ ma trận nhầm lẫn
     plt.figure(figsize=figsize)
     sns.heatmap(cm, annot=True, fmt='d', cmap='Blues', cbar=True, square=True,
-                xticklabels=labels if labels else 'auto',
-                yticklabels=labels if labels else 'auto')
-    
-    plt.title('Ma trận nhầm lẫn')
+                xticklabels=labels if labels is not None else 'auto',
+                yticklabels=labels if labels is not None else 'auto')
+
+    plt.title(f'{tex}')
     plt.xlabel('Nhãn dự đoán')
     plt.ylabel('Nhãn thực tế')
     plt.xticks(rotation=45, ha='right')
     plt.yticks(rotation=0)
     plt.tight_layout()
+
+    # Tạo thư mục nếu chưa có
+    os.makedirs('result_confusion_matrix', exist_ok=True)
+
+    # Đổi tên file hợp lệ (loại bỏ kí tự đặc biệt)
+    from re import sub
+    filename = sub(r'[\\/*?:"<>|]', "_", tex) + '.png'
+
+    # Lưu hình
+    plt.savefig(f'result_confusion_matrix/{filename}', dpi=300)
     plt.show()

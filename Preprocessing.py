@@ -39,7 +39,6 @@ def label_encode(data, categorical_cols):
     for col in categorical_cols:
         data[col] = le.fit_transform(data[col])
         label_mappings[col] = dict(zip(le.transform(le.classes_), le.classes_))  # mapping số → nhãn gốc
-
     return data, label_mappings
 
 # Hàm scale dữ liệu
