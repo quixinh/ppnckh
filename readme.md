@@ -17,11 +17,20 @@ Tập dữ liệu RT-IoT2022 là một bộ dữ liệu IoT toàn diện bao g�
 - Các thuộc tính lưu lượng mạng được ghi lại bằng công cụ Zeek và plugin Flowmeter.
 
 
+**Phân bố nhãn trong "Attack_type"**:
+<div style="text-align: center;">
+    <img src="images/attack_type_distribution.png" width="400">
+</div>
+
 **Tỷ lệ dữ liệu bình thường và tấn công**:
-![Phân bố dữ liệu: Bình thường vs Tấn công](images/normal_vs_attack_pie.png)
+<div style="text-align: center;">
+    <img src="images/normal_vs_attack_pie.png" width="400">
+</div>
 
 **Đặc trưng của tập dữ liệu RT-IoT2022**:
-<img src="images/features_radar.png" width="400">
+<div style="text-align: center;">
+    <img src="images/features_radar.png" width="400">
+</div>
 
 **Nguồn**: [RT-IoT2022, UCI Machine Learning Repository](https://doi.org/10.24432/C5P338)
 
