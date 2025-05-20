@@ -61,11 +61,68 @@ Việc áp dụng các phương pháp lựa chọn đặc trưng (Feature Import
 | 3   | Viết và hoàn thiện luận văn (Tóm tắt, Chương 1-5, Tài liệu tham khảo) | 1 tuần | [Chưa xác định] |
 
 ## Hướng Dẫn Cài Đặt
-[Chưa xác định: Hướng dẫn thiết lập môi trường dự án, bao gồm Python, scikit-learn, TensorFlow, PyTorch và các thư viện phụ thuộc khác.]
 
+Hướng dẫn thiết lập môi trường dự án, bao gồm Python, scikit-learn, TensorFlow, PyTorch và các thư viện phụ thuộc khác.
+
+### Yêu cầu
+- **Python**: Phiên bản 3.10
+
+### Các bước cài đặt
+
+1. **Tạo và kích hoạt môi trường ảo**:
+   ```bash
+   python -m venv venv
+   source venv/bin/activate  # Trên macOS/Linux
+   venv\Scripts\activate     # Trên Windows
+2. **Cài đặt các thư viện cần thiết**:
+  ```bash
+   pip install -r requirements.txt
+3. **CTải mã nguồn dự án:**:
+  ```bash
+   git clone https://github.com/quixinh/ppnckh.git
+   cd ppnckh
+  
 ## Hướng Dẫn Sử Dụng
-[Chưa xác định: Hướng dẫn chạy mã nguồn, bao gồm tiền xử lý dữ liệu, lựa chọn đặc trưng, huấn luyện mô hình và đánh giá.]
+## So Sánh Hiệu Suất Các Mô Hình Phân Loại Với Dữ Liệu Chưa Giảm Chiếu
 
+### Bảng 2: Hiệu suất các mô hình phân loại với dữ liệu chưa giảm chiếu
+
+
+| Mô hình           | Accuracy | Precision | Recall | F1-score | Thời gian (s) |
+|-------------------|----------|-----------|--------|----------|---------------|
+| LinearSVC         | 0.986    | 0.812     | 0.904  | 0.840    | 894.8840      |
+| XGBoost           | 0.998    | 0.956     | 0.952  | 0.954    | 3.9874        |
+| Logistic Regression | 0.983  | 0.794     | 0.921  | 0.825    | 22.2761       |
+| KNN               | 0.996    | 0.896     | 0.943  | 0.912    | 0.0390        |
+| Random Forest     | 0.997    | 0.981     | 0.947  | 0.961    | 5.7090        |
+| MLP               | 0.978    | 0.774     | 0.914  | 0.808    | 108.430       |
+
+### Bảng 3: Hiệu suất các mô hình phân loại với dữ liệu đã giảm chiếu
+
+| Mô hình           | Accuracy | Precision | Recall | F1-score | Thời gian (s) |
+|-------------------|----------|-----------|--------|----------|---------------|
+| LinearSVC         | 0.945    | 0.708     | 0.804  | 0.724    | 79.1720       |
+| XGBoost           | 0.998    | 0.982     | 0.952  | 0.964    | 1.7791        |
+| Logistic Regression | 0.963  | 0.710     | 0.886  | 0.748    | 18.55590      |
+| KNN               | 0.996    | 0.935     | 0.942  | 0.929    | 0.0140        |
+| Random Forest     | 0.997    | 0.978     | 0.947  | 0.960    | 3.5242        |
+| MLP               | 0.980    | 0.757     | 0.914  | 0.790    | 102.1000      |
+
+### Bảng 4: Hiệu suất mô hình sử dụng RandomizedSearchCV
+
+| Mô hình           | Accuracy | Precision | Recall | F1-score | Thời gian (s) |
+|-------------------|----------|-----------|--------|----------|---------------|
+| XGBoost (subsample=0.8, scale_pos_weight=1.0, n_estimators=100, max_depth=3, learning_rate=0.2, gamma=0.1, colsample_bytree=0.6) | 0.997 | 0.969 | 0.936 | 0.950 | 344.29 |
+| KNN (weights='distance', n_neighbors=3, metric='manhattan') | 0.997 | 0.908 | 0.943 | 0.920 | 154.19 |
+| Random Forest (bootstrap=False, max_depth=14, max_features='sqrt', min_samples_leaf=1, min_samples_split=4, n_estimators=108) | 0.998 | 0.952 | 0.950 | 0.951 | 250.52 |
+
+### Bảng 5: Hiệu suất mô hình sử dụng GridSearchCV
+
+| Mô hình           | Accuracy | Precision | Recall | F1-score | Thời gian (s) |
+|-------------------|----------|-----------|--------|----------|---------------|
+| XGBoost (colsample_bytree=0.6, gamma=0, learning_rate=0.2, max_depth=5, n_estimators=100, scale_pos_weight=1.0, subsample=0.8) | 0.998 | 0.980 | 0.938 | 0.956 | 12596.003 |
+| KNN (metric='manhattan', n_neighbors=3, weights='distance') | 0.997 | 0.908 | 0.943 | 0.920 | 204.72 |
+| Random Forest (bootstrap=False, max_depth=20, max_features='sqrt', min_samples_leaf=1, min_samples_split=5, n_estimators=200) | 0.998 | 0.980 | 0.950 | 0.962 | 4597.30 |
 ## Kết Quả
 [Chưa xác định: Tóm tắt kết quả thực nghiệm, bao gồm các chỉ số hiệu suất (Accuracy, F1-Score, Precision, Recall) và so sánh trước/sau khi lựa chọn đặc trưng.]
 
