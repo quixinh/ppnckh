@@ -15,7 +15,14 @@ Tập dữ liệu RT-IoT2022 là một bộ dữ liệu IoT toàn diện bao g�
 - Dữ liệu từ các thiết bị IoT như ThingSpeak-LED, Wipro-Bulb và MQTT-Temp.
 - Các kịch bản tấn công mô phỏng như Brute-Force SSH, DDoS (Hping, Slowloris) và thăm dò Nmap.
 - Các thuộc tính lưu lượng mạng được ghi lại bằng công cụ Zeek và plugin Flowmeter.
+**Phân bố nhãn trong "Attack_type"**:
+![Phân phối nhãn Attack_type](images/attack_type_distribution.png)
 
+**Tỷ lệ dữ liệu bình thường và tấn công**:
+![Phân bố dữ liệu: Bình thường vs Tấn công](images/normal_vs_attack_pie.png)
+
+**Đặc trưng của tập dữ liệu RT-IoT2022**:
+![Đặc trưng của RT-IoT2022](images/features_radar.png)
 **Nguồn**: [RT-IoT2022, UCI Machine Learning Repository](https://doi.org/10.24432/C5P338)
 
 ## Phương Pháp Nghiên Cứu
@@ -27,6 +34,7 @@ Nghiên cứu kết hợp phân tích lý thuyết, triển khai thực nghiệm
 - Tham khảo các nguồn đáng tin cậy từ IEEE Xplore, SpringerLink và các hội nghị bảo mật (USENIX Security, NDSS).
 
 ### 2. Triển Khai Thực Nghiệm
+![Quy trình xử lý dữ liệu và huấn luyện mô hình](images/workflow_diagram.png)
 - **Tiền Xử Lý Dữ Liệu**:
   - Áp dụng SMOTE để xử lý mất cân bằng lớp.
   - Sử dụng StandardScaler để chuẩn hóa dữ liệu.
@@ -35,6 +43,7 @@ Nghiên cứu kết hợp phân tích lý thuyết, triển khai thực nghiệm
 - **Huấn Luyện Mô Hình**:
   - Huấn luyện các mô hình (SVM, LinearSVC, XGBoost, Logistic Regression, KNN, Random Forest, Neural Network) bằng scikit-learn và TensorFlow/PyTorch.
   - Chia dữ liệu: 80% huấn luyện, 20% kiểm tra, sử dụng xác thực chéo 5-fold.
+  ![Kiến trúc Multilayer Perceptron](images/mlp_architecture.png)
 - **Đánh Giá Hiệu Suất**:
   - Đo lường hiệu suất bằng Accuracy, Precision, Recall và F1-Score.
   - So sánh hiệu suất trước và sau khi lựa chọn đặc trưng bằng đường cong ROC và các chỉ số thống kê.
@@ -56,9 +65,9 @@ Việc áp dụng các phương pháp lựa chọn đặc trưng (Feature Import
 ## Tiến Độ Dự Án
 | STT | Nội Dung | Thời Gian Dự Kiến | Ngày Hoàn Thành Dự Kiến |
 |-----|----------|-------------------|-------------------------|
-| 1   | Nghiên cứu, chọn đề tài, xây dựng đề cương luận văn | 2 tuần | [Chưa xác định] |
-| 2   | Nộp đề cương, chỉnh sửa và hoàn thiện đề cương | 1 tuần | [Chưa xác định] |
-| 3   | Viết và hoàn thiện luận văn (Tóm tắt, Chương 1-5, Tài liệu tham khảo) | 1 tuần | [Chưa xác định] |
+| 1   | Nghiên cứu, chọn đề tài, xây dựng đề cương luận văn | 2 tuần | Hoàn thành |
+| 2   | Nộp đề cương, chỉnh sửa và hoàn thiện đề cương | 1 tuần | Hoàn thành |
+| 3   | Viết và hoàn thiện luận văn (Tóm tắt, Chương 1-5, Tài liệu tham khảo) | 1 tuần | Hoàn thành |
 
 ## Hướng Dẫn Cài Đặt
 
@@ -70,21 +79,23 @@ Hướng dẫn thiết lập môi trường dự án, bao gồm Python, scikit-l
 ### Các bước cài đặt
 
 1. **Tạo và kích hoạt môi trường ảo**:
-   ```bash
-   python -m venv venv
-   source venv/bin/activate  # Trên macOS/Linux
-   venv\Scripts\activate     # Trên Windows
-   ```
+  ```bash
+  python -m venv venv
+  source venv/bin/activate  # Trên macOS/Linux
+  venv\Scripts\activate     # Trên Windows
+  ```
 2. **Cài đặt các thư viện cần thiết**:
   ```bash
-   pip install -r requirements.txt
+    pip install -r requirements.txt
   ```
 3. **Tải mã nguồn dự án**:
   ```bash
-   git clone https://github.com/quixinh/ppnckh.git
-   cd ppnckh
+  git clone https://github.com/quixinh/ppnckh.git
+  cd ppnckh
   ```
-## Hướng Dẫn Sử Dụng
+
+## Kết Quả
+[Chưa xác định: Tóm tắt kết quả thực nghiệm, bao gồm các chỉ số hiệu suất (Accuracy, F1-Score, Precision, Recall) và so sánh trước/sau khi lựa chọn đặc trưng.]
 ## So Sánh Hiệu Suất Các Mô Hình Phân Loại Với Dữ Liệu Chưa Giảm Chiếu
 
 ### Bảng 2: Hiệu suất các mô hình phân loại với dữ liệu chưa giảm chiếu
@@ -125,8 +136,6 @@ Hướng dẫn thiết lập môi trường dự án, bao gồm Python, scikit-l
 | XGBoost (colsample_bytree=0.6, gamma=0, learning_rate=0.2, max_depth=5, n_estimators=100, scale_pos_weight=1.0, subsample=0.8) | 0.998 | 0.980 | 0.938 | 0.956 | 12596.003 |
 | KNN (metric='manhattan', n_neighbors=3, weights='distance') | 0.997 | 0.908 | 0.943 | 0.920 | 204.72 |
 | Random Forest (bootstrap=False, max_depth=20, max_features='sqrt', min_samples_leaf=1, min_samples_split=5, n_estimators=200) | 0.998 | 0.980 | 0.950 | 0.962 | 4597.30 |
-## Kết Quả
-[Chưa xác định: Tóm tắt kết quả thực nghiệm, bao gồm các chỉ số hiệu suất (Accuracy, F1-Score, Precision, Recall) và so sánh trước/sau khi lựa chọn đặc trưng.]
 
 ## Cấu Trúc Thư Mục
 [Chưa xác định: Mô tả cấu trúc thư mục của dự án, ví dụ: mã nguồn, dữ liệu, mô hình và đầu ra.]
@@ -141,4 +150,4 @@ Hướng dẫn thiết lập môi trường dự án, bao gồm Python, scikit-l
 - **Mã Số Sinh Viên**: 3122410348
 - **Giảng Viên Hướng Dẫn**: TS. Đỗ Như Tài
 - **Cơ Quan**: Trường Đại học Sài Gòn, Khoa Công nghệ Thông tin
-- **Email**: [Chưa xác định]
+- **Email**: thqui68@gmail.com
