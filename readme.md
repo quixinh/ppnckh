@@ -15,14 +15,14 @@ Tập dữ liệu RT-IoT2022 là một bộ dữ liệu IoT toàn diện bao g�
 - Dữ liệu từ các thiết bị IoT như ThingSpeak-LED, Wipro-Bulb và MQTT-Temp.
 - Các kịch bản tấn công mô phỏng như Brute-Force SSH, DDoS (Hping, Slowloris) và thăm dò Nmap.
 - Các thuộc tính lưu lượng mạng được ghi lại bằng công cụ Zeek và plugin Flowmeter.
-**Phân bố nhãn trong "Attack_type"**:
-![Phân phối nhãn Attack_type](images/attack_type_distribution.png)
+
 
 **Tỷ lệ dữ liệu bình thường và tấn công**:
 ![Phân bố dữ liệu: Bình thường vs Tấn công](images/normal_vs_attack_pie.png)
 
 **Đặc trưng của tập dữ liệu RT-IoT2022**:
-![Đặc trưng của RT-IoT2022](images/features_radar.png)
+<img src="images/features_radar.png" width="400">
+
 **Nguồn**: [RT-IoT2022, UCI Machine Learning Repository](https://doi.org/10.24432/C5P338)
 
 ## Phương Pháp Nghiên Cứu
