@@ -43,7 +43,11 @@ Nghiên cứu kết hợp phân tích lý thuyết, triển khai thực nghiệm
 - Tham khảo các nguồn đáng tin cậy từ IEEE Xplore, SpringerLink và các hội nghị bảo mật (USENIX Security, NDSS).
 
 ### 2. Triển Khai Thực Nghiệm
-![Quy trình xử lý dữ liệu và huấn luyện mô hình](images/workflow_diagram.png)
+
+<div style="text-align: center;">
+    <img src="images/workflow_diagram.png" width="400">
+</div>
+
 - **Tiền Xử Lý Dữ Liệu**:
   - Áp dụng SMOTE để xử lý mất cân bằng lớp.
   - Sử dụng StandardScaler để chuẩn hóa dữ liệu.
@@ -52,7 +56,9 @@ Nghiên cứu kết hợp phân tích lý thuyết, triển khai thực nghiệm
 - **Huấn Luyện Mô Hình**:
   - Huấn luyện các mô hình (SVM, LinearSVC, XGBoost, Logistic Regression, KNN, Random Forest, Neural Network) bằng scikit-learn và TensorFlow/PyTorch.
   - Chia dữ liệu: 80% huấn luyện, 20% kiểm tra, sử dụng xác thực chéo 5-fold.
-  ![Kiến trúc Multilayer Perceptron](images/mlp_architecture.png)
+  <div style="text-align: center;">
+        <img src="images/mlp_architecture.png" width="400">
+    </div>
 - **Đánh Giá Hiệu Suất**:
   - Đo lường hiệu suất bằng Accuracy, Precision, Recall và F1-Score.
   - So sánh hiệu suất trước và sau khi lựa chọn đặc trưng bằng đường cong ROC và các chỉ số thống kê.
