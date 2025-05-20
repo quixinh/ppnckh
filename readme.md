@@ -81,7 +81,7 @@ Hướng dẫn thiết lập môi trường dự án, bao gồm Python, scikit-l
   ```bash
    git clone https://github.com/quixinh/ppnckh.git
    cd ppnckh
-  
+  ```
 ## Hướng Dẫn Sử Dụng
 ## So Sánh Hiệu Suất Các Mô Hình Phân Loại Với Dữ Liệu Chưa Giảm Chiếu
 
