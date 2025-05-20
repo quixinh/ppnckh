@@ -74,10 +74,12 @@ Hướng dẫn thiết lập môi trường dự án, bao gồm Python, scikit-l
    python -m venv venv
    source venv/bin/activate  # Trên macOS/Linux
    venv\Scripts\activate     # Trên Windows
+   ```
 2. **Cài đặt các thư viện cần thiết**:
   ```bash
    pip install -r requirements.txt
-3. **CTải mã nguồn dự án:**:
+  ```
+3. **Tải mã nguồn dự án**:
   ```bash
    git clone https://github.com/quixinh/ppnckh.git
    cd ppnckh
