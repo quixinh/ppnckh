@@ -1,5 +1,11 @@
-# Cải Thiện Hiệu Suất Phát Hiện Xâm Nhập Thông Qua Lựa Chọn Đặc Trưng và So Sánh Mô Hình trên Dữ Liệu RT-IoT2022
 
+# Cải Thiện Hiệu Suất Phát Hiện Xâm Nhập Thông Qua Lựa Chọn Đặc Trưng và So Sánh Mô Hình trên Dữ Liệu RT-IoT2022
+## Liên Hệ
+- **Sinh Viên**: Tạ Hồng Quí
+- **Mã Số Sinh Viên**: 3122410348
+- **Giảng Viên Hướng Dẫn**: TS. Đỗ Như Tài
+- **Cơ Quan**: Trường Đại học Sài Gòn, Khoa Công nghệ Thông tin
+- **Email**: thqui68@gmail.com
 ## Tổng Quan
 Dự án này tập trung vào việc nâng cao hiệu suất của hệ thống phát hiện xâm nhập bằng cách sử dụng tập dữ liệu RT-IoT2022. Nghiên cứu nhằm cải thiện độ chính xác và hiệu quả tính toán thông qua việc áp dụng các kỹ thuật lựa chọn đặc trưng và so sánh các mô hình học máy khác nhau. Tập dữ liệu RT-IoT2022, được thu thập từ cơ sở hạ tầng IoT thời gian thực, bao gồm các hành vi mạng đa dạng và các kịch bản tấn công phức tạp, là nguồn tài nguyên lý tưởng để nghiên cứu lựa chọn đặc trưng và tối ưu hóa mô hình.
 
@@ -56,9 +62,9 @@ Nghiên cứu kết hợp phân tích lý thuyết, triển khai thực nghiệm
 - **Huấn Luyện Mô Hình**:
   - Huấn luyện các mô hình (SVM, LinearSVC, XGBoost, Logistic Regression, KNN, Random Forest, Neural Network) bằng scikit-learn và TensorFlow/PyTorch.
   - Chia dữ liệu: 80% huấn luyện, 20% kiểm tra, sử dụng xác thực chéo 5-fold.
-  <div style="text-align: center;">
+<div style="text-align: center;">
         <img src="images/mlp_architecture.png" width="400">
-    </div>
+</div>
 - **Đánh Giá Hiệu Suất**:
   - Đo lường hiệu suất bằng Accuracy, Precision, Recall và F1-Score.
   - So sánh hiệu suất trước và sau khi lựa chọn đặc trưng bằng đường cong ROC và các chỉ số thống kê.
@@ -152,17 +158,11 @@ Hướng dẫn thiết lập môi trường dự án, bao gồm Python, scikit-l
 | KNN (metric='manhattan', n_neighbors=3, weights='distance') | 0.997 | 0.908 | 0.943 | 0.920 | 204.72 |
 | Random Forest (bootstrap=False, max_depth=20, max_features='sqrt', min_samples_leaf=1, min_samples_split=5, n_estimators=200) | 0.998 | 0.980 | 0.950 | 0.962 | 4597.30 |
 
-## Cấu Trúc Thư Mục
-[Chưa xác định: Mô tả cấu trúc thư mục của dự án, ví dụ: mã nguồn, dữ liệu, mô hình và đầu ra.]
 
 ## Tài Liệu Tham Khảo
 1. S. Bhunia and R. Nagapadma. RT-IoT2022. UCI Machine Learning Repository, 2023. https://doi.org/10.24432/C5P338.
-2. [Chưa xác định: Các tài liệu tham khảo bổ sung từ IEEE Xplore, SpringerLink hoặc các nguồn khác.]
 
+2. S. Bhunia and R. Nagapadma, "RT-IoT2022," UCI Machine Learning Repository, 2023. [Online]. Available: https://doi.org/10.24432/C5P338.
 
-## Liên Hệ
-- **Sinh Viên**: Tạ Hồng Quí
-- **Mã Số Sinh Viên**: 3122410348
-- **Giảng Viên Hướng Dẫn**: TS. Đỗ Như Tài
-- **Cơ Quan**: Trường Đại học Sài Gòn, Khoa Công nghệ Thông tin
-- **Email**: thqui68@gmail.com
+3. S. Sharmila, B. Rohini, S. Kavitha, and S. Anand, "Performance Evaluation of Parametric and Non-Parametric Machine Learning Models using Statistical Analysis for RT-IoT2022 Dataset," Journal of Scientific & Industrial Research, vol. 83, no. 8, pp. 864-872, Aug. 2024. DOI: 10.56042/jsir.v83i8.7437.
+
