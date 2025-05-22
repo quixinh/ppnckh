@@ -11,7 +11,7 @@ Dự án này tập trung vào việc nâng cao hiệu suất của hệ thống
 
 ## Mục Tiêu
 - **Lựa Chọn Đặc Trưng**: Xác định và giảm số lượng đặc trưng từ 85 xuống khoảng 40 bằng các phương pháp như Feature Importance và ngưỡng tương quan (>0.8) để loại bỏ các đặc trưng không liên quan hoặc dư thừa.
-- **So Sánh Mô Hình**: Huấn luyện và đánh giá nhiều mô hình học máy (SVM, LinearSVC, XGBoost, Logistic Regression, KNN, Random Forest, Neural Network) để xác định mô hình hiệu quả nhất cho việc phát hiện xâm nhập thời gian thực.
+- **So Sánh Mô Hình**: Huấn luyện và đánh giá nhiều mô hình học máy (LinearSVC, XGBoost, Logistic Regression, KNN, Random Forest, Neural Network) để xác định mô hình hiệu quả nhất cho việc phát hiện xâm nhập thời gian thực.
 - **Đánh Giá Hiệu Suất**: Đánh giá hiệu suất mô hình bằng các chỉ số như Accuracy, F1-Score, Precision và Recall, so sánh kết quả trước và sau khi lựa chọn đặc trưng.
 - **Tiền Xử Lý Dữ Liệu**: Sử dụng SMOTE để cân bằng lớp và StandardScaler để chuẩn hóa dữ liệu, đảm bảo quá trình huấn luyện mô hình ổn định.
 
@@ -60,11 +60,12 @@ Nghiên cứu kết hợp phân tích lý thuyết, triển khai thực nghiệm
 - **Lựa Chọn Đặc Trưng**:
   - Áp dụng Feature Importance và ngưỡng tương quan (>0.8) để giảm số đặc trưng từ 85 xuống khoảng 40.
 - **Huấn Luyện Mô Hình**:
-  - Huấn luyện các mô hình (SVM, LinearSVC, XGBoost, Logistic Regression, KNN, Random Forest, Neural Network) bằng scikit-learn và TensorFlow/PyTorch.
+  - Huấn luyện các mô hình (LinearSVC, XGBoost, Logistic Regression, KNN, Random Forest, Neural Network) bằng scikit-learn và TensorFlow/PyTorch.
   - Chia dữ liệu: 80% huấn luyện, 20% kiểm tra, sử dụng xác thực chéo 5-fold.
 <div style="text-align: center;">
         <img src="images/mlp_architecture.png" width="400">
 </div>
+
 - **Đánh Giá Hiệu Suất**:
   - Đo lường hiệu suất bằng Accuracy, Precision, Recall và F1-Score.
   - So sánh hiệu suất trước và sau khi lựa chọn đặc trưng bằng đường cong ROC và các chỉ số thống kê.
@@ -116,7 +117,6 @@ Hướng dẫn thiết lập môi trường dự án, bao gồm Python, scikit-l
   ```
 
 ## Kết Quả
-[Chưa xác định: Tóm tắt kết quả thực nghiệm, bao gồm các chỉ số hiệu suất (Accuracy, F1-Score, Precision, Recall) và so sánh trước/sau khi lựa chọn đặc trưng.]
 ## So Sánh Hiệu Suất Các Mô Hình Phân Loại Với Dữ Liệu Chưa Giảm Chiếu
 
 ### Bảng 2: Hiệu suất các mô hình phân loại với dữ liệu chưa giảm chiếu

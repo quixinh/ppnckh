@@ -77,7 +77,7 @@ def plot_heatmap(X, y, title="Correlation Heatmap"):
     data['Attack_type'] = y
     corr_matrix = data.corr()
     
-    plt.figure(figsize=(20, 25))
+    plt.figure(figsize=(30, 30))
     sns.heatmap(corr_matrix, annot=True, cmap='coolwarm', vmin=-1, vmax=1)
     plt.title(title)
     plt.show()
